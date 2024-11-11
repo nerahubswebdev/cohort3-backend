@@ -2,11 +2,14 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth.routes.js";
+import projectRoutes from "./routes/project.routes.js";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 const app = express();
 
 // make the api see json files
+app.use(cookieParser());
 app.use(express.json());
 
 const myport = process.env.PORT || 6007;
@@ -18,6 +21,7 @@ app.get("/", function (req, res) {
 
 // our own routes
 app.use("/auth", authRoutes);
+app.use("/project", projectRoutes);
 
 // this is the nmongo db connection
 mongoose
