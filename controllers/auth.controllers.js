@@ -128,7 +128,7 @@ const login = async (req, res) => {
     // httpOnly: true,
     // secure: true,
     sameSite: "none",
-    maxAge: 30 * 1000,
+    maxAge: 60 * 1000,
   });
   res.cookie("nama", refreshtoken, {
     // httpOnly: true,

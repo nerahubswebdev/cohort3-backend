@@ -15,6 +15,10 @@ const ProjectSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    createdby: {
+      type: String,
+      required: [true, "please connect a user"],
+    },
   },
   {
     timestamps: true,

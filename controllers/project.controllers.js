@@ -1,8 +1,23 @@
 import Project from "../models/project.model.js";
 
+const testProject = async (req, res) => {
+  const body = req.body;
+
+  const validatedUser = req.user;
+
+  console.log("the validated user => ", validatedUser);
+
+  return res.status(200).json({
+    success: true,
+    message: "Project added",
+    testproject: body,
+  });
+};
+
 const createProject = async (req, res) => {
   try {
     const body = req.body;
+    const validatedUser = req.user;
 
     if (!body.title || !body.description || !body.image) {
       res.status(400).json({
@@ -30,6 +45,7 @@ const createProject = async (req, res) => {
       title: body.title.trim(),
       description: body.description,
       image: body.image,
+      createdby: validatedUser?._id,
     });
 
     if (newProject) {
@@ -58,4 +74,11 @@ const getProjects = async (req, res) => {};
 const getProject = async (req, res) => {};
 const deleteProject = async (req, res) => {};
 
-export { createProject, updateProject, getProjects, getProject, deleteProject };
+export {
+  createProject,
+  updateProject,
+  getProjects,
+  getProject,
+  deleteProject,
+  testProject,
+};
