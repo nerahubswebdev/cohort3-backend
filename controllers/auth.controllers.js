@@ -125,13 +125,13 @@ const login = async (req, res) => {
 
   res.cookie("goat", accesstoken, {
     httpOnly: true,
-    // secure: true,
+    secure: true,
     sameSite: "none",
     maxAge: 60 * 1000,
   });
   res.cookie("nama", refreshtoken, {
     httpOnly: true,
-    // secure: true,
+    secure: true,
     sameSite: "none",
     maxAge: 1 * 24 * 60 * 60 * 1000,
   });
