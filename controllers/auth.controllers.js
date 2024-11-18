@@ -50,7 +50,6 @@ const register = async (req, res) => {
       res.status(201).json({
         success: true,
         message: "user registered",
-        user: newUser,
       });
     } else {
       res.status(400).json({

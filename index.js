@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import authRoutes from "./routes/auth.routes.js";
 import projectRoutes from "./routes/project.routes.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 dotenv.config();
 
 const app = express();
@@ -11,6 +12,12 @@ const app = express();
 // make the api see json files
 app.use(cookieParser());
 app.use(express.json());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+    credentials: true,
+  })
+);
 
 const myport = process.env.PORT || 6007;
 const db = process.env.DATABASE_URL;
