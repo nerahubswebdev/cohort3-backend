@@ -46,10 +46,10 @@ export const validateUser = async (req, res, next) => {
           );
 
           res.cookie("goat", accesstoken, {
-            // httpOnly: true,
-            // secure: true,
+            httpOnly: true,
+            secure: true,
             sameSite: "none",
-            maxAge: 5 * 1000,
+            maxAge: 60 * 1000,
           });
 
           const { password, ...rest } = validuser._doc;
