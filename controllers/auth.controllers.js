@@ -143,4 +143,21 @@ const login = async (req, res) => {
   });
 };
 
-export { register, login };
+const validate = async (req, res) => {
+  const validuser = req.user;
+
+  if (validuser) {
+    res.status(200).json({
+      success: true,
+      message: "User valid",
+      user: validuser,
+    });
+  } else {
+    res.status(403).json({
+      success: false,
+      message: "Session expired",
+    });
+  }
+};
+
+export { register, login, validate };
