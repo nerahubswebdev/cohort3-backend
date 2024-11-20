@@ -160,4 +160,29 @@ const validate = async (req, res) => {
   }
 };
 
-export { register, login, validate };
+const logout = async (req, res) => {
+  try {
+    res.clearCookie("goat", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+    res.clearCookie("nama", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "logout successful",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+export { register, login, validate, logout };
