@@ -22,6 +22,8 @@ app.use(
 const myport = process.env.PORT || 6007;
 const db = process.env.DATABASE_URL;
 
+console.log("the database => ", db);
+
 app.get("/", function (req, res) {
   res.send("Hello World jdjdijiudiudiu");
 });
