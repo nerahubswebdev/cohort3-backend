@@ -22,8 +22,6 @@ app.use(
 const myport = process.env.PORT || 6007;
 const db = process.env.DATABASE_URL;
 
-console.log("the database => ", db);
-
 app.get("/", function (req, res) {
   res.send("Hello World jdjdijiudiudiu");
 });
@@ -35,8 +33,10 @@ app.use("/project", projectRoutes);
 // this is the nmongo db connection
 mongoose
   .connect(db)
-  .then(() => {
+  .then((connectionresult) => {
     console.log("database connected successfully");
+    // console.log("connection result => ", connectionresult);
+
     app.listen(myport, () => {
       console.log(`listening to port ${myport}`);
     });

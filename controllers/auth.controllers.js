@@ -66,81 +66,88 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const body = req.body;
+  try {
+    const body = req.body;
 
-  if (!body.email || !body.password) {
-    res.status(400).json({
-      success: false,
-      message: "All fields required",
-    });
-    return;
-  }
-
-  const userExists = await User.findOne({ email: body.email }).exec();
-
-  if (!userExists) {
-    res.status(404).json({
-      success: false,
-      message: "Invalid credentials email",
-    });
-
-    return;
-  }
-
-  const validPassword = await bcrypt.compare(
-    body.password,
-    userExists?.password
-  );
-
-  if (!validPassword) {
-    res.status(409).json({
-      success: false,
-      message: "Invalid credentials password",
-    });
-    return;
-  }
-
-  // creating the tokens for authentication
-  const accesstoken = jwt.sign(
-    {
-      jdjdjdjd: userExists?._id,
-    },
-    process.env.obi,
-    {
-      expiresIn: process.env.mat,
+    if (!body.email || !body.password) {
+      res.status(400).json({
+        success: false,
+        message: "All fields required",
+      });
+      return;
     }
-  );
 
-  const refreshtoken = jwt.sign(
-    {
-      tttete: userExists?._id,
-    },
-    process.env.ada,
-    {
-      expiresIn: process.env.mrt,
+    const userExists = await User.findOne({ email: body.email }).exec();
+
+    if (!userExists) {
+      res.status(404).json({
+        success: false,
+        message: "Invalid credentials email",
+      });
+
+      return;
     }
-  );
 
-  // the cookies for authentication
+    const validPassword = await bcrypt.compare(
+      body.password,
+      userExists?.password
+    );
 
-  res.cookie("goat", accesstoken, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    maxAge: 60 * 1000,
-  });
-  res.cookie("nama", refreshtoken, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    maxAge: 1 * 24 * 60 * 60 * 1000,
-  });
+    if (!validPassword) {
+      res.status(409).json({
+        success: false,
+        message: "Invalid credentials password",
+      });
+      return;
+    }
 
-  res.status(200).json({
-    success: true,
-    message: "login successful",
-    // loginToken: { accesstoken, refreshtoken },
-  });
+    // creating the tokens for authentication
+    const accesstoken = jwt.sign(
+      {
+        jdjdjdjd: userExists?._id,
+      },
+      process.env.obi,
+      {
+        expiresIn: process.env.mat,
+      }
+    );
+
+    const refreshtoken = jwt.sign(
+      {
+        tttete: userExists?._id,
+      },
+      process.env.ada,
+      {
+        expiresIn: process.env.mrt,
+      }
+    );
+
+    // the cookies for authentication
+
+    res.cookie("goat", accesstoken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 60 * 1000,
+    });
+    res.cookie("nama", refreshtoken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 1 * 24 * 60 * 60 * 1000,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "login successful",
+      // loginToken: { accesstoken, refreshtoken },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
 };
 
 const validate = async (req, res) => {
